@@ -1,0 +1,664 @@
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* Estilo do cabeçalho fixo */
+.header {
+    position: sticky;
+    top: 0;
+    background-color: #1d1d1d;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.header.shrink {
+    padding: 10px 15px;
+}
+
+.header .icon {
+    width: 50px;
+    height: 50px;
+    background-color: #00aaff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.header.shrink .icon {
+    width: 0;
+    height: 0;
+    opacity: 0;
+}
+
+.header .info {
+    flex-grow: 1;
+    text-align: center;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.header.shrink .info {
+    text-align: left;
+    font-size: 14px;
+}
+
+.header h1 {
+    font-size: 18px;
+    margin: 0;
+    transition: all 0.3s ease;
+}
+
+.header.shrink h1 {
+    font-size: 16px;
+    max-width: 150px;
+}
+
+.header .members {
+    font-size: 14px;
+    color: #bbb;
+    transition: all 0.3s ease;
+}
+
+.header .pay-button {
+    display: none;
+    font-size: 14px;
+    color: white;
+    background-color: #00aaff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.header.shrink .pay-button {
+    display: inline-block;
+    opacity: 1;
+}
+
+/* Fundo da área de mensagens */
+.group {
+    margin-top: 20px;
+    padding: 0 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+    background-image: url('https://i.postimg.cc/wvm97fyb/IMG-20241130-200303.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    scrollbar-width: thin;
+}
+
+.preview {
+    margin-bottom: 15px;
+    background-color: rgba(29, 29, 29, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.preview .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.preview .videos {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: thin;
+}
+
+.preview .videos video {
+    width: 100%; /* O vídeo ocupará 100% da largura do contêiner */
+    height: auto; /* A altura será ajustada proporcionalmente */
+    border-radius: 8px;
+    max-width: 800px; /* Define um limite máximo para a largura do vídeo */
+    margin: 0 auto; /* Centraliza o vídeo */
+    display: block;
+}
+.preview {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-title {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.product-description {
+    font-size: 16px;
+    color: #ccc;
+    margin-top: 10px;
+}
+
+.preview .description {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Estilizando a barra de rolagem */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(29, 29, 29, 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #00aaff;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #008fcc;
+}
+
+/* Botão flutuante no canto inferior esquerdo */
+.floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #0088cc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    animation: bounce 2s infinite;
+    z-index: 101;
+}
+
+.floating-button img {
+    width: 30px;
+    height: 30px;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Estilo do pop-up */
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+    background-color: #1d1d1d;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 102;
+    display: none;
+}
+
+.popup.active {
+    display: block;
+}
+
+.popup video {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.popup .close-btn {
+    margin-top: 10px;
+    text-align: right;
+    cursor: pointer;
+    color: #00aaff;
+    font-size: 16px;
+}
+
+.product-preview {
+background-color: #fff;
+border-radius: 10px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+max-width: 600px;
+width: 100%; /* Adaptação responsiva */
+padding: 15px;
+text-align: center;
+}
+
+.product-title {
+font-size: 20px;
+font-weight: bold;
+color: #333;
+margin-bottom: 10px;
+}
+
+.media-frame {
+width: 100%;
+height: calc(100vw * 0.5625); /* Proporção 16:9 */
+max-height: 400px; /* Limite máximo */
+border: none;
+border-radius: 8px;
+margin-bottom: 15px;
+}
+
+.product-description {
+text-align: left;
+font-size: 14px;
+color: #555;
+margin-bottom: 10px;
+}
+
+.product-description ul {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+
+.product-description li {
+margin: 5px 0;
+}
+
+.product-price span strong a{
+font-size: 16px;
+color: #1a73e8;
+font-weight: bold;
+}
+
+.popup-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.8);
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 1000;
+}
+
+.popup-content {
+background: white;
+border-radius: 10px;
+padding: 20px;
+width: 90%;
+max-width: 500px;
+text-align: center;
+position: relative;
+overflow-y: auto;
+max-height: 80%;
+}
+
+.popup-content h2 {
+margin-top: 0;
+color: #333;
+}
+
+.popup-content ul {
+list-style: none;
+padding: 0;
+margin: 20px 0;
+text-align: left;
+font-size: 0.9rem;
+}
+
+.popup-content ul li {
+margin: 5px 0;
+color: #555;
+}
+
+.close-btn {
+position: absolute;
+top: 10px;
+left: 10px;
+background: none;
+color: #333;
+border: none;
+font-size: 1.5rem;
+font-weight: bold;
+cursor: pointer;
+}
+
+.close-btn:hover {
+color: #d9534f;
+}
+
+.get-now-btn {
+background: #5cb85c;
+color: white;
+border: none;
+padding: 10px 15px;
+border-radius: 5px;
+cursor: pointer;
+margin-top: 15px;
+text-decoration:none;
+display:inline-block;
+}
+
+.get-now-btn:hover {
+background: #4cae4c;
+}
+
+.view-more {
+color: #007bff;
+text-decoration: none;
+cursor: pointer;
+margin-left:150px;
+}
+
+.view-more:hover {
+text-decoration: underline;
+}
+#notification-container {
+position: fixed;
+top: 20px;
+left: 50%;
+transform: translateX(-50%);
+width: 320px;
+z-index: 1000;
+}
+
+.notification {
+display: flex;
+align-items: center;
+background: rgba(255, 255, 255, 0.85);
+border-radius: 20px;
+padding: 10px 15px;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+font-size: 14px;
+margin-bottom: 10px;
+opacity: 0;
+transform: translateY(-20px);
+animation: fade-in 1s ease forwards, fade-out 1s ease 4s forwards;
+backdrop-filter: blur(10px);
+position: relative;
+}
+
+.notification img {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+margin-right: 12px;
+}
+
+.notification-content {
+flex-grow: 1;
+display: flex;
+flex-direction: column;
+}
+
+.notification-title {
+font-weight: bold;
+color: #333;
+}
+
+.notification-message {
+color: #666;
+font-size: 13px;
+}
+
+.notification-time {
+position: absolute;
+top: 8px;
+right: 12px;
+font-size: 12px;
+color: #888;
+}
+
+@keyframes fade-in {
+0% {
+opacity: 0;
+transform: translateY(-20px);
+}
+100% {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+@keyframes fade-out {
+0% {
+opacity: 1;
+transform: translateY(0);
+}
+100% {
+opacity: 0;
+transform: translateY(-30px);
+}
+}
+/* Modal Container */
+.modal {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: rgba(0, 0, 0, 0.6);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 2000;
+transition: opacity 0.3s ease;
+}
+
+.modal.hidden {
+opacity: 0;
+pointer-events: none;
+}
+
+/* Modal Content */
+.modal-content {
+background: #ffffff;
+border-radius: 20px;
+padding: 20px 30px;
+text-align: center;
+max-width: 400px;
+width: 90%;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+animation: scale-in 0.3s ease;
+}
+
+.modal-content h2 {
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+font-size: 20px;
+margin-bottom: 10px;
+color: #333;
+}
+
+.modal-content p {
+font-size: 16px;
+color: #555;
+margin-bottom: 20px;
+}
+
+.modal-buttons {
+display: flex;
+justify-content: space-around;
+}
+
+.btn {
+padding: 10px 20px;
+font-size: 14px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+background-color: rgba(0, 0, 0, 0.1);
+}
+
+.positive {
+background-color: #007bff;
+color: white;
+animation: button-wiggle 1.5s infinite ease-in-out;
+}
+
+.negative {
+background-color: #f44336;
+color: white;
+}
+
+/* Button Wiggle Animation */
+@keyframes button-wiggle {
+0%, 100% {
+transform: translateX(0);
+}
+25% {
+transform: translateX(-5px);
+}
+50% {
+transform: translateX(5px);
+}
+75% {
+transform: translateX(-3px);
+}
+}
+
+/* Scale animation for the modal */
+@keyframes scale-in {
+0% {
+transform: scale(0.8);
+opacity: 0;
+}
+100% {
+transform: scale(1);
+opacity: 1;
+}
+}
+
+iframe[src*="mediadelivery.net"] {
+transform: scale(1.5); /* Aumenta o tamanho do player */
+transform-origin: center; /* Garante que a escala seja feita no centro */
+}
+video {
+    width: 100%; /* O vídeo ocupará toda a largura disponível */
+    max-width: 800px; /* Limite máximo de largura */
+    height: auto; /* Altura proporcional */
+    outline: none; /* Remove bordas de foco */
+}
+/* Container do vídeo */
+.video-container {
+    position: relative;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Vídeo */
+.media-frame {
+    width: 100%;
+    display: block;
+    background-color: #000;
+    height: auto;
+}
+
+/* Controles personalizados */
+.custom-controls {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 8px;
+}
+
+.control-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.control-btn:hover {
+    background-color: #45a049;
+}
+
+.progress-bar {
+    width: 70%;
+    margin: 0 10px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    background: #bbb;
+    border-radius: 3px;
+}
+
+.progress-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+#currentTime, #duration {
+    color: #fff;
+}
+/* Configuração para a div que contém o vídeo */
+.video-container {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+    position: relative;
+    overflow: hidden; /* Garante que o vídeo não saia da área da div */
+}
+
+/* Estilo do vídeo */
+.media-frame {
+    width: 100% !important; /* Força o vídeo a ocupar 100% da largura */
+    height: 100% !important; /* Faz o vídeo preencher toda a altura disponível */
+    object-fit: cover; /* Faz com que o vídeo cubra a área sem distorcer */
+    display: block;
+    margin: 0 auto;
+}
+
+/* Responsividade para telas de dispositivos móveis */
+@media screen and (max-width: 768px) {
+    .media-frame {
+        width: 100% !important;
+        height: auto !important; /* Ajusta a altura para manter a proporção */
+    }
+}
